@@ -1,0 +1,292 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* PENGATURAN DASAR & FONT */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { height: 100%; width: 100%; overflow: hidden; }
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #343a40;
+    color: #cbd5e1;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+:root {
+    /* High-Tech Dimmed Theme (Dark Grey Sidebar) */
+    --bg-primary: #212529;
+    --bg-secondary: #343a40;
+    --accent-cyan: #00f0ff;
+    --accent-blue: #4361ee;
+    --accent-red: #f72585;
+    --text-primary: #f8f9fa;
+    --text-secondary: #adb5bd;
+    --border-color: #495057;
+    --glow-cyan: 0 0 12px rgba(0, 240, 255, 0.6);
+    --glow-blue: 0 0 10px rgba(67, 97, 238, 0.5);
+    --glow-red: 0 0 10px rgba(247, 37, 133, 0.5);
+    --transition-fast: all 0.2s ease-out;
+    --transition-medium: all 0.3s ease-out;
+    --shadow-light: 0 2px 8px rgba(0, 0, 0, 0.1);
+    --shadow-medium: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* LAYOUT UTAMA */
+.nav-page-wrapper { display: flex; height: 100%; width: 100%; }
+.mobile-sidebar-toggle { display: none; }
+
+/* SIDEBAR - HIGH-TECH DIMMED */
+.nav-sidebar {
+    width: 320px;
+    flex-shrink: 0;
+    background-color: var(--bg-secondary);
+    border-right: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: var(--shadow-medium);
+    color: var(--text-secondary);
+}
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+    flex-shrink: 0;
+}
+.header-icon {
+    font-size: 1.8rem;
+    color: var(--accent-cyan);
+    text-shadow: var(--glow-cyan);
+    margin-right: 0.9rem;
+}
+.sidebar-title {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    letter-spacing: 0.5px;
+}
+.sidebar-content {
+    padding: 1.5rem;
+    overflow-y: auto;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+.sidebar-section {
+    margin-bottom: 1.8rem;
+}
+.sidebar-section h4 {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.9rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0.8;
+}
+.sidebar-section h4 i { color: var(--accent-blue); }
+
+.search-section { flex-shrink: 0; }
+.form-group { margin-bottom: 1rem; }
+.form-group label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-bottom: 0.4rem;
+    color: var(--text-secondary);
+}
+.form-control {
+    width: 100%;
+    padding: 0.7rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 0.9rem;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    transition: var(--transition-fast);
+}
+.form-control::placeholder { color: var(--text-secondary); opacity: 0.7; }
+.form-control:focus {
+    outline: none;
+    border-color: var(--accent-cyan);
+    box-shadow: 0 0 0 2px rgba(0, 240, 255, 0.3), inset 0 0 5px rgba(0, 240, 255, 0.1);
+    background-color: var(--bg-secondary);
+}
+
+/* GRUP INPUT PENCARIAN */
+.search-input-group, .route-search-group {
+    position: relative;
+}
+.search-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    z-index: 2;
+}
+.search-input { padding-left: 2.5rem; }
+
+/* PANAH DROPDOWN (DIHAPUS) */
+/* .dropdown-arrow { ... } */
+.route-search-group .form-control {
+    cursor: pointer;
+    /* padding-right: 2.5rem; (Tidak perlu lagi) */
+}
+
+/* DAFTAR HASIL PENCARIAN */
+.search-results-list {
+    list-style: none;
+    padding: 0;
+    margin: 5px 0 0 0;
+    max-height: 200px;
+    overflow-y: auto;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background-color: var(--bg-primary);
+    box-shadow: var(--shadow-medium);
+    position: absolute;
+    width: 100%;
+    z-index: 10;
+    display: none;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-color) transparent;
+}
+.search-results-list::-webkit-scrollbar { width: 4px; }
+.search-results-list::-webkit-scrollbar-track { background: transparent; }
+.search-results-list::-webkit-scrollbar-thumb { background-color: var(--border-color); border-radius: 2px; }
+.search-results-list li {
+    padding: 10px 12px;
+    cursor: pointer;
+    border-bottom: 1px solid var(--border-color);
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    transition: var(--transition-fast);
+}
+.search-results-list li:last-child { border-bottom: none; }
+.search-results-list li:hover {
+    background-color: rgba(67, 97, 238, 0.1);
+    color: var(--text-primary);
+}
+
+/* GAYA TOMBOL */
+.button-group { display: flex; gap: 0.8rem; margin-top: 0.5rem; }
+.btn {
+    padding: 0.6rem 1rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: var(--transition-fast);
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid transparent;
+}
+.btn i { margin-right: 0.5rem; }
+.btn-primary {
+    background-color: var(--accent-blue);
+    color: var(--text-primary);
+    box-shadow: var(--glow-blue);
+    flex-grow: 1;
+    border-color: var(--accent-blue);
+}
+.btn-primary:hover {
+    background-color: #4f6fff;
+    box-shadow: 0 0 15px rgba(67, 97, 238, 0.7);
+    transform: translateY(-1px);
+}
+.btn-secondary {
+    background-color: transparent;
+    color: var(--text-secondary);
+    border-color: var(--border-color);
+    flex-grow: 1;
+}
+.btn-secondary:hover {
+    background-color: rgba(108, 117, 125, 0.1);
+    color: var(--text-primary);
+    border-color: var(--text-secondary);
+    transform: translateY(-1px);
+}
+
+.sidebar-footer {
+    padding: 1.2rem 1.5rem;
+    border-top: 1px solid var(--border-color);
+    flex-shrink: 0;
+    background-color: var(--bg-primary);
+}
+.btn-back {
+    display: flex; align-items: center; justify-content: center; width: 100%;
+    padding: 0.7rem 1rem; background-color: transparent;
+    color: var(--accent-red);
+    border: 1px solid var(--accent-red);
+    border-radius: 6px; font-size: 0.95rem;
+    font-weight: 600; cursor: pointer; text-decoration: none;
+    transition: var(--transition-fast);
+}
+.btn-back i { margin-right: 0.5rem; }
+.btn-back:hover {
+    background-color: rgba(247, 37, 133, 0.2);
+    color: #ff5d9e;
+    border-color: #ff5d9e;
+    box-shadow: var(--glow-red);
+    transform: translateY(-1px);
+}
+
+/* AREA PETA */
+.map-container { flex-grow: 1; position: relative; }
+.map-view { width: 100%; height: 100%; background-color: #f0f2f5; }
+
+/* Popup Leaflet (Tetap gelap agar kontras dengan peta terang) */
+.leaflet-popup-content-wrapper {
+    background: var(--bg-secondary);
+    border-radius: 4px;
+    box-shadow: var(--shadow-medium);
+    border: 1px solid var(--border-color);
+}
+.leaflet-popup-content {
+    color: var(--text-primary);
+    font-family: 'Inter', sans-serif !important;
+    font-size: 13px;
+}
+.leaflet-popup-content b {
+    font-weight: 600;
+    color: var(--accent-cyan);
+}
+.leaflet-popup-tip { background: var(--bg-secondary); }
+
+/* RESPONSIVE - MOBILE */
+@media (max-width: 767px) {
+    .mobile-sidebar-toggle {
+        display: flex; position: absolute; top: 10px; left: 10px; z-index: 1002;
+        background-color: rgba(52, 58, 64, 0.8);
+        backdrop-filter: blur(5px);
+        border: 1px solid var(--border-color);
+        border-radius: 50%; width: 40px; height: 40px;
+        justify-content: center; align-items: center; font-size: 1.2rem; cursor: pointer;
+        box-shadow: var(--shadow-medium);
+        color: var(--text-primary);
+    }
+    .nav-sidebar {
+        position: fixed; left: 0; top: 0; height: 100%; z-index: 1001;
+        transform: translateX(-100%);
+        box-shadow: 2px 0 15px rgba(0,0,0,0.4); width: 280px;
+    }
+    .nav-sidebar.open { transform: translateX(0); }
+    .map-container { width: 100%; }
+    .nav-page-wrapper::before {
+        content: ''; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+        background: rgba(0,0,0,0.6); z-index: 1000;
+        opacity: 0; pointer-events: none;
+        transition: opacity 0.3s ease;
+    }
+    .nav-page-wrapper.sidebar-open::before {
+        opacity: 1; pointer-events: auto;
+    }
+}

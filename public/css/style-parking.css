@@ -1,0 +1,292 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* PENGATURAN DASAR & FONT */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { height: 100%; width: 100%; overflow: hidden; }
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #343a40;
+    color: #cbd5e1;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+:root {
+    /* High-Tech Dimmed Theme (Dark Grey Sidebar) */
+    --bg-primary: #212529;
+    --bg-secondary: #343a40;
+    --accent-cyan: #00f0ff;
+    --accent-blue: #4361ee;
+    --accent-red: #f72585;
+    --text-primary: #f8f9fa;
+    --text-secondary: #adb5bd;
+    --border-color: #495057;
+    --glow-cyan: 0 0 12px rgba(0, 240, 255, 0.6);
+    --glow-blue: 0 0 10px rgba(67, 97, 238, 0.5);
+    --glow-red: 0 0 10px rgba(247, 37, 133, 0.5);
+    --transition-fast: all 0.2s ease-out;
+    --transition-medium: all 0.3s ease-out;
+    --shadow-light: 0 2px 8px rgba(0, 0, 0, 0.1);
+    --shadow-medium: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* LAYOUT UTAMA */
+.parking-page-wrapper { display: flex; height: 100%; width: 100%; }
+.mobile-sidebar-toggle { display: none; }
+
+/* SIDEBAR - HIGH-TECH DIMMED */
+.parking-sidebar {
+    width: 320px;
+    flex-shrink: 0;
+    background-color: var(--bg-secondary);
+    border-right: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: var(--shadow-medium);
+    color: var(--text-secondary);
+}
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+    flex-shrink: 0;
+}
+.header-icon {
+    font-size: 1.8rem;
+    color: var(--accent-cyan);
+    text-shadow: var(--glow-cyan);
+    margin-right: 0.9rem;
+}
+.sidebar-title {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    letter-spacing: 0.5px;
+}
+.sidebar-content {
+    padding: 1.5rem;
+    overflow-y: auto;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+.sidebar-section {
+    margin-bottom: 1.8rem;
+}
+.sidebar-section h4 {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.9rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0.8;
+}
+.sidebar-section h4 i { color: var(--accent-blue); }
+
+.search-section { flex-shrink: 0; }
+.search-input-group { position: relative; }
+.search-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--text-secondary); font-size: 0.9rem; }
+.search-input {
+    width: 100%;
+    padding: 0.7rem 1rem 0.7rem 2.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 0.9rem;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    transition: var(--transition-fast);
+}
+.search-input::placeholder { color: var(--text-secondary); opacity: 0.7; }
+.search-input:focus {
+    outline: none;
+    border-color: var(--accent-cyan);
+    box-shadow: 0 0 0 2px rgba(0, 240, 255, 0.3), inset 0 0 5px rgba(0, 240, 255, 0.1);
+    background-color: var(--bg-secondary);
+}
+.list-section {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+.parking-list-detailed {
+    list-style: none; padding: 0; margin: 0;
+    overflow-y: auto; flex-grow: 1;
+    max-height: calc(100vh - 300px);
+    scrollbar-width: thin; scrollbar-color: var(--border-color) transparent;
+}
+.parking-list-detailed::-webkit-scrollbar { width: 4px; }
+.parking-list-detailed::-webkit-scrollbar-track { background: transparent; }
+.parking-list-detailed::-webkit-scrollbar-thumb { background-color: var(--border-color); border-radius: 2px; }
+.parking-item {
+    background-color: transparent;
+    padding: 0.8rem 0.5rem;
+    margin-bottom: 0;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: var(--transition-fast);
+    border: 1px solid transparent;
+    border-left: 3px solid transparent;
+    margin-left: -0.5rem;
+    padding-left: calc(0.5rem + 3px);
+}
+.parking-item h5 {
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    transition: color 0.15s ease-out;
+}
+.parking-item:hover {
+    background-color: rgba(67, 97, 238, 0.1);
+    border-left-color: var(--accent-blue);
+}
+.parking-item:hover h5 { color: var(--text-primary); }
+.parking-item.highlighted {
+    background-color: rgba(0, 240, 255, 0.15);
+    border-left-color: var(--accent-cyan);
+}
+.parking-item.highlighted h5 {
+    color: var(--accent-cyan);
+    font-weight: 600;
+    text-shadow: var(--glow-cyan);
+}
+.parking-item-empty {
+    color: var(--text-secondary); padding: 1.5rem 1rem; text-align: center;
+    background: transparent; font-size: 0.9rem; opacity: 0.7;
+}
+.sidebar-footer {
+    padding: 1.2rem 1.5rem;
+    border-top: 1px solid var(--border-color);
+    flex-shrink: 0;
+    background-color: var(--bg-primary);
+}
+.btn-back {
+    display: flex; align-items: center; justify-content: center; width: 100%;
+    padding: 0.7rem 1rem; background-color: transparent;
+    color: var(--accent-red);
+    border: 1px solid var(--accent-red);
+    border-radius: 6px; font-size: 0.95rem;
+    font-weight: 600; cursor: pointer; text-decoration: none;
+    transition: var(--transition-fast);
+    box-shadow: none;
+}
+.btn-back i { margin-right: 0.5rem; }
+.btn-back:hover {
+    background-color: rgba(247, 37, 133, 0.2);
+    color: #ff5d9e;
+    border-color: #ff5d9e;
+    box-shadow: var(--glow-red);
+    transform: translateY(-1px);
+}
+
+/* AREA PETA */
+.parking-map-container { flex-grow: 1; position: relative; }
+.map-view { width: 100%; height: 100%; background-color: #f0f2f5; }
+
+/* Popup Leaflet (Tetap gelap agar kontras dengan peta terang) */
+.leaflet-popup-content-wrapper {
+    background: var(--bg-secondary);
+    border-radius: 4px;
+    box-shadow: var(--shadow-medium);
+    border: 1px solid var(--border-color);
+}
+.leaflet-popup-content {
+    color: var(--text-primary);
+    font-family: 'Inter', sans-serif !important;
+    font-size: 13px;
+}
+.leaflet-popup-content b {
+    font-weight: 600;
+    color: var(--accent-cyan);
+}
+.leaflet-popup-tip { background: var(--bg-secondary); }
+
+/* Efek Glow untuk Polygon Aktif */
+.leaflet-interactive.polygon-glow {
+    filter: drop-shadow(0px 0px 10px rgba(0, 240, 255, 0.6));
+}
+
+/* ✨ LEGENDA PETA BARU ✨ */
+.leaflet-control-container .leaflet-bottom.leaflet-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+.info.legend {
+    background: rgba(33, 37, 41, 0.85); /* Latar belakang gelap transparan */
+    backdrop-filter: blur(5px);
+    padding: 10px 15px;
+    border-radius: 6px;
+    box-shadow: var(--shadow-medium);
+    color: var(--text-primary);
+    margin-right: 10px;
+    margin-bottom: 10px;
+    border: 1px solid var(--border-color);
+}
+.info.legend h4 {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin: 0 0 8px 0;
+    color: var(--text-primary);
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 5px;
+}
+.info.legend div {
+    font-size: 0.85rem;
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+}
+.info.legend div:last-child {
+    margin-bottom: 0;
+}
+.info.legend i {
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255,255,255,0.7);
+    float: left;
+    margin-right: 8px;
+    opacity: 0.7; /* Cocokkan transparansi polygon */
+}
+
+
+/* RESPONSIVE - MOBILE */
+@media (max-width: 767px) {
+    .mobile-sidebar-toggle {
+        display: flex; position: absolute; top: 10px; left: 10px; z-index: 1002;
+        background-color: rgba(52, 58, 64, 0.8);
+        backdrop-filter: blur(5px);
+        border: 1px solid var(--border-color);
+        border-radius: 50%; width: 40px; height: 40px;
+        justify-content: center; align-items: center; font-size: 1.2rem; cursor: pointer;
+        box-shadow: var(--shadow-medium);
+        color: var(--text-primary);
+    }
+    .parking-sidebar {
+        position: fixed; left: 0; top: 0; height: 100%; z-index: 1001;
+        transform: translateX(-100%);
+        box-shadow: 2px 0 15px rgba(0,0,0,0.4); width: 280px;
+    }
+    .parking-sidebar.open { transform: translateX(0); }
+    .map-container { width: 100%; }
+    .parking-page-wrapper::before {
+        content: ''; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+        background: rgba(0,0,0,0.6); z-index: 1000;
+        opacity: 0; pointer-events: none;
+        transition: opacity 0.3s ease;
+    }
+    .parking-page-wrapper.sidebar-open::before {
+        opacity: 1; pointer-events: auto;
+    }
+    .info.legend {
+        margin-right: 10px;
+        margin-bottom: 30px; /* Lebih tinggi dari attribution */
+    }
+}
